@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.personsListView = new System.Windows.Forms.ListView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lastname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.age = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
@@ -55,6 +55,21 @@
             this.personsListView.VirtualMode = true;
             this.personsListView.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.personsListView_RetrieveVirtualItem);
             // 
+            // name
+            // 
+            this.name.Text = "Имя";
+            this.name.Width = 172;
+            // 
+            // lastname
+            // 
+            this.lastname.Text = "Фамилия";
+            this.lastname.Width = 193;
+            // 
+            // age
+            // 
+            this.age.Text = "Возраст";
+            this.age.Width = 326;
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(23, 230);
@@ -74,21 +89,6 @@
             this.button2.Text = "Редактировать";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // name
-            // 
-            this.name.Text = "Имя";
-            this.name.Width = 172;
-            // 
-            // lastname
-            // 
-            this.lastname.Text = "Фамилия";
-            this.lastname.Width = 193;
-            // 
-            // age
-            // 
-            this.age.Text = "Возраст";
-            this.age.Width = 326;
             // 
             // button3
             // 
@@ -121,6 +121,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Form1";
             this.Text = "Список сотрудников";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }

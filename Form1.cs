@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace EditPerson
 {
@@ -65,10 +68,10 @@ namespace EditPerson
             personsListView.VirtualListSize = persons.Count;
             personsListView.Invalidate();
 
-/*
-            ListViewItem newItem = personsListView.Items.Add(editForm.FirstName);
-            newItem.SubItems.Add(editForm.LastName);
-            newItem.SubItems.Add(editForm.Age.ToString());*/
+            /*
+                        ListViewItem newItem = personsListView.Items.Add(editForm.FirstName);
+                        newItem.SubItems.Add(editForm.LastName);
+                        newItem.SubItems.Add(editForm.Age.ToString());*/
 
 
 
@@ -76,7 +79,7 @@ namespace EditPerson
 
         private void personsListView_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            if (e.ItemIndex >= 0 && e.ItemIndex< persons.Count)
+            if (e.ItemIndex >= 0 && e.ItemIndex < persons.Count)
             {
                 e.Item = new ListViewItem(persons[e.ItemIndex].FirstName);
                 e.Item.SubItems.Add(persons[e.ItemIndex].LastName);
@@ -90,7 +93,35 @@ namespace EditPerson
             StringBuilder stringBuilder = new StringBuilder();
             foreach (Person item in persons)
             {
-                stringBuilder.Append(" ")
+                stringBuilder.Append(" ");
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            BinaryFormatter binFormater = new BinaryFormatter();
+            try
+            {
+                using (FileStream fStream = new FileStream("AllMyPerson.dat", FileMode.OpenOrCreate,
+                                FileAccess.Read, FileShare.None))
+                {
+                    persons.AddRange((List<Person>)binFormater.Deserialize(fStream));
+                }
+            }
+            catch 
+            { }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            BinaryFormatter binFormater = new BinaryFormatter();
+            
+            using (FileStream fStream = new FileStream("PersonCollection.xml", FileMode.Create,
+                FileAccess.Write, FileShare.None))
+            {
+                XmlSerializer xmlFormat = new XmlSerializer(typeof(List<Person>));
+                xmlFormat.Serialize(fStream, persons);
+                  
             }
         }
     }
